@@ -1,0 +1,104 @@
+﻿@page "/allergies/edit"
+@using Microsoft.EntityFrameworkCore
+@using Group5_OnlinePharmacy.Domain
+@inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Allergy</h2>
+<hr />
+@if (Allergy is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Allergy" OnValidSubmit="UpdateAllergy" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Allergy.Id" value="@Allergy.Id" />
+                <div class="mb-3">
+                    <label for="severity" class="form-label">Severity:</label>
+                    <InputText id="severity" @bind-Value="Allergy.Severity" class="form-control" />
+                    <ValidationMessage For="() => Allergy.Severity" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="reaction" class="form-label">Reaction:</label>
+                    <InputText id="reaction" @bind-Value="Allergy.Reaction" class="form-control" />
+                    <ValidationMessage For="() => Allergy.Reaction" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="customerid" class="form-label">CustomerId:</label>
+                    <InputNumber id="customerid" @bind-Value="Allergy.CustomerId" class="form-control" />
+                    <ValidationMessage For="() => Allergy.CustomerId" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="medicineid" class="form-label">MedicineId:</label>
+                    <InputNumber id="medicineid" @bind-Value="Allergy.MedicineId" class="form-control" />
+                    <ValidationMessage For="() => Allergy.MedicineId" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/allergies">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Allergy? Allergy { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Allergy ??= await context.Allergy.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Allergy is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateAllergy()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Allergy!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!AllergyExists(Allergy!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/allergies");
+    }
+
+    private bool AllergyExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Allergy.Any(e => e.Id == id);
+    }
+}

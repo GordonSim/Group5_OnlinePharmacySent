@@ -1,0 +1,39 @@
+﻿@page "/allergies"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Group5_OnlinePharmacy.Domain
+@using Group5_OnlinePharmacy.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="allergies/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.Allergy">
+    <PropertyColumn Property="allergy => allergy.Severity" />
+    <PropertyColumn Property="allergy => allergy.Reaction" />
+    <PropertyColumn Property="allergy => allergy.CustomerId" />
+    <PropertyColumn Property="allergy => allergy.MedicineId" />
+
+    <TemplateColumn Context="allergy">
+        <a href="@($"allergies/edit?id={allergy.Id}")">Edit</a> |
+        <a href="@($"allergies/details?id={allergy.Id}")">Details</a> |
+        <a href="@($"allergies/delete?id={allergy.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private Group5_OnlinePharmacyContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

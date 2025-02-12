@@ -1,0 +1,52 @@
+﻿@page "/allergies/details"
+@using Microsoft.EntityFrameworkCore
+@using Group5_OnlinePharmacy.Domain
+@inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Allergy</h2>
+    <hr />
+    @if (allergy is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Severity</dt>
+            <dd class="col-sm-10">@allergy.Severity</dd>
+            <dt class="col-sm-2">Reaction</dt>
+            <dd class="col-sm-10">@allergy.Reaction</dd>
+            <dt class="col-sm-2">CustomerId</dt>
+            <dd class="col-sm-10">@allergy.CustomerId</dd>
+            <dt class="col-sm-2">MedicineId</dt>
+            <dd class="col-sm-10">@allergy.MedicineId</dd>
+        </dl>
+        <div>
+            <a href="@($"/allergies/edit?id={allergy.Id}")">Edit</a> |
+            <a href="@($"/allergies")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Allergy? allergy;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        allergy = await context.Allergy.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (allergy is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

@@ -1,0 +1,59 @@
+﻿@page "/medicines/create"
+@using Microsoft.EntityFrameworkCore
+@using Group5_OnlinePharmacy.Domain
+@inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Medicine</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Medicine" OnValidSubmit="AddMedicine" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label> 
+                <InputText id="name" @bind-Value="Medicine.Name" class="form-control" /> 
+                <ValidationMessage For="() => Medicine.Name" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="price" class="form-label">Price:</label> 
+                <InputNumber id="price" @bind-Value="Medicine.Price" class="form-control" /> 
+                <ValidationMessage For="() => Medicine.Price" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label> 
+                <InputText id="description" @bind-Value="Medicine.Description" class="form-control" /> 
+                <ValidationMessage For="() => Medicine.Description" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="stockqty" class="form-label">StockQty:</label> 
+                <InputNumber id="stockqty" @bind-Value="Medicine.StockQty" class="form-control" /> 
+                <ValidationMessage For="() => Medicine.StockQty" class="text-danger" /> 
+            </div>       
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/medicines">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Medicine Medicine { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddMedicine()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Medicine.Add(Medicine);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/medicines");
+    }
+}

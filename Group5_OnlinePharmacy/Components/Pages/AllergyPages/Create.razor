@@ -1,0 +1,59 @@
+﻿@page "/allergies/create"
+@using Microsoft.EntityFrameworkCore
+@using Group5_OnlinePharmacy.Domain
+@inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Allergy</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Allergy" OnValidSubmit="AddAllergy" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="severity" class="form-label">Severity:</label> 
+                <InputText id="severity" @bind-Value="Allergy.Severity" class="form-control" /> 
+                <ValidationMessage For="() => Allergy.Severity" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="reaction" class="form-label">Reaction:</label> 
+                <InputText id="reaction" @bind-Value="Allergy.Reaction" class="form-control" /> 
+                <ValidationMessage For="() => Allergy.Reaction" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="customerid" class="form-label">CustomerId:</label> 
+                <InputNumber id="customerid" @bind-Value="Allergy.CustomerId" class="form-control" /> 
+                <ValidationMessage For="() => Allergy.CustomerId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="medicineid" class="form-label">MedicineId:</label> 
+                <InputNumber id="medicineid" @bind-Value="Allergy.MedicineId" class="form-control" /> 
+                <ValidationMessage For="() => Allergy.MedicineId" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/allergies">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Allergy Allergy { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddAllergy()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Allergy.Add(Allergy);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/allergies");
+    }
+}

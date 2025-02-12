@@ -1,0 +1,113 @@
+﻿@implements IDisposable
+@inject NavigationManager NavigationManager
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="Images/MedLogo.jpg" alt="Group5_OnlinePharmacy" class="img-fluid" style="height: 50px;" />
+        </a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<body>
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Medicines">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Medicines
+            </NavLink>
+        </div>
+
+        <AuthorizeView>
+            <Authorized>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Customers">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Customers
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="symptoms">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Symptoms
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="allergies">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Allergies
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Orders">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Orders
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="OrderItems">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> OrderItem
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Manage">
+                            <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <form action="Account/Logout" method="post">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                            <button type="submit" class="nav-link">
+                                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                            </button>
+                        </form>
+                    </div>
+            </Authorized>
+
+            <NotAuthorized>
+				<div class="nav-item px-3">
+					<NavLink class="nav-link d-flex align-items-center" href="Account/Register">
+						<img src="Images/SignUp.png" alt="Register" class="nav-icon" />
+						<span class="ms-2">Register</span>
+					</NavLink>
+				</div>
+
+				<div class="nav-item px-3">
+					<NavLink class="nav-link d-flex align-items-center" href="Account/Login">
+						<img src="Images/Login.jpg" alt="Login" class="nav-icon" />
+						<span class="ms-2">Login</span>
+					</NavLink>
+				</div>
+            </NotAuthorized>
+        </AuthorizeView>
+    </nav>
+</div>
+</body>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+}

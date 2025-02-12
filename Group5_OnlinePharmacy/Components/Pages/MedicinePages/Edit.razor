@@ -1,0 +1,105 @@
+﻿@page "/medicines/edit"
+@using Microsoft.EntityFrameworkCore
+@using Group5_OnlinePharmacy.Domain
+@inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+
+<h1>Edit</h1>
+
+<h2>Medicine</h2>
+<hr />
+@if (Medicine is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Medicine" OnValidSubmit="UpdateMedicine" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Medicine.Id" value="@Medicine.Id" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <InputText id="name" @bind-Value="Medicine.Name" class="form-control" />
+                    <ValidationMessage For="() => Medicine.Name" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price:</label>
+                    <InputNumber id="price" @bind-Value="Medicine.Price" class="form-control" />
+                    <ValidationMessage For="() => Medicine.Price" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <InputText id="description" @bind-Value="Medicine.Description" class="form-control" />
+                    <ValidationMessage For="() => Medicine.Description" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="stockqty" class="form-label">StockQty:</label>
+                    <InputNumber id="stockqty" @bind-Value="Medicine.StockQty" class="form-control" />
+                    <ValidationMessage For="() => Medicine.StockQty" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/medicines">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Medicine? Medicine { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Medicine ??= await context.Medicine.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Medicine is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateMedicine()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Medicine!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!MedicineExists(Medicine!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/medicines");
+    }
+
+    private bool MedicineExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Medicine.Any(e => e.Id == id);
+    }
+}

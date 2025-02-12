@@ -1,0 +1,61 @@
+﻿@page "/orderitems/create"
+@using Microsoft.EntityFrameworkCore
+@using Group5_OnlinePharmacy.Domain
+@inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+
+
+<h1>Create</h1>
+
+<h2>OrderItem</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="OrderItem" OnValidSubmit="AddOrderItem" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="qty" class="form-label">Qty:</label> 
+                <InputNumber id="qty" @bind-Value="OrderItem.Qty" class="form-control" /> 
+                <ValidationMessage For="() => OrderItem.Qty" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="itemprice" class="form-label">ItemPrice:</label> 
+                <InputNumber id="itemprice" @bind-Value="OrderItem.ItemPrice" class="form-control" /> 
+                <ValidationMessage For="() => OrderItem.ItemPrice" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="orderid" class="form-label">OrderId:</label> 
+                <InputNumber id="orderid" @bind-Value="OrderItem.OrderId" class="form-control" /> 
+                <ValidationMessage For="() => OrderItem.OrderId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="medicineid" class="form-label">MedicineId:</label> 
+                <InputNumber id="medicineid" @bind-Value="OrderItem.MedicineId" class="form-control" /> 
+                <ValidationMessage For="() => OrderItem.MedicineId" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/orderitems">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private OrderItem OrderItem { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddOrderItem()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.OrderItem.Add(OrderItem);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/orderitems");
+    }
+}

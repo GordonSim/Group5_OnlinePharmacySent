@@ -1,0 +1,20 @@
+﻿body {
+    background-color: #ffeae0;
+}
+
+/* Center the login form */
+.login-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+}
+
+.col-md-4 {
+    width: 100%;
+    max-width: 400px; /* Adjust width of login form */
+    background: white; /* Optional: Adds background to form */
+    padding: 20px;
+    border-radius: 10px; /* Optional: Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Light shadow */
+}
