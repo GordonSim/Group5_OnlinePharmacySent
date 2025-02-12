@@ -19,7 +19,6 @@ namespace Group5_OnlinePharmacy.Configurations.Entities
                     NormalizedEmail = "ADMIN@LOCALHOST.COM",
                     FirstName = "Admin",
                     LastName = "User",
-                    CustomerId = 1,
                     UserName = "admin@localhost.com",
                     NormalizedUserName = "ADMIN@LOCALHOST.COM",
                     PasswordHash = hasher.HashPassword(null, "P@ssword1"),

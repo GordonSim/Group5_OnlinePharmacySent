@@ -11,26 +11,24 @@
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-<body>
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Medicines">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Medicines
-            </NavLink>
-        </div>
-
         <AuthorizeView>
             <Authorized>
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="Customers">
+                        <NavLink class="nav-link" href="medicines">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Medicines
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="customers">
                             <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Customers
                         </NavLink>
                     </div>
 
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="symptoms">
+                    <NavLink class="nav-link" href="symptoms">
                             <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Symptoms
                         </NavLink>
                     </div>
@@ -42,13 +40,13 @@
                     </div>
 
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="Orders">
+                        <NavLink class="nav-link" href="orders">
                             <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Orders
                         </NavLink>
                     </div>
 
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="OrderItems">
+                    <NavLink class="nav-link" href="orderitems">
                             <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> OrderItem
                         </NavLink>
                     </div>
@@ -71,6 +69,19 @@
             </Authorized>
 
             <NotAuthorized>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="medicines">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Medicines
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Orders">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Orders
+                    </NavLink>
+                </div>
+
 				<div class="nav-item px-3">
 					<NavLink class="nav-link d-flex align-items-center" href="Account/Register">
 						<img src="Images/SignUp.png" alt="Register" class="nav-icon" />
@@ -88,7 +99,6 @@
         </AuthorizeView>
     </nav>
 </div>
-</body>
 
 @code {
     private string? currentUrl;

@@ -303,7 +303,7 @@ namespace Group5_OnlinePharmacy.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "Phone", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, null, "3c726cb7-259c-4642-b6e8-c88d1686ec2b", 1, "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEDwkd1sdOm5MNUoPj7gHOm/gW3bgvmaNVSAePB8QHoeaElfsfzX3CyvLpQ7oAqkvEg==", null, null, false, "5362f096-2775-43ce-935f-c2d4f8dd0438", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, null, "9b7fb4a9-b94d-4d0a-9e47-a4eae8186f00", null, "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEAlXXvpE4r1nSb/HNFGe3uF/pcwxqWCPQE5hqQgZGYtbE7x3EjUW9PaGvF3FLuCVpQ==", null, null, false, "c14a3344-4a8e-414b-8b6d-e7951ea74a6e", false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 table: "Customer",
@@ -315,13 +315,13 @@ namespace Group5_OnlinePharmacy.Migrations
                 columns: new[] { "Id", "Description", "ImageURL", "Name", "Price", "StockQty" },
                 values: new object[,]
                 {
-                    { 1, "Relieves sore throat and cough symptoms.", "/images/Cough/Difflam.jpg", "Difflam", 8.99f, 50 },
-                    { 2, "Traditional remedy for cough and sore throat.", "/images/Cough/Pei Pa Koa.jpg", "Pei Pa Koa", 6.99f, 40 },
-                    { 3, "Helps restore gut health and control diarrhea.", "/images/Diarrhea/Lacteolfort.jpg", "Lacteolfort", 4.99f, 30 },
-                    { 4, "Lubricates dry eyes and provides long-lasting relief.", "/images/Eye Care/Moist Eye-mo.jpg", "Moist Eye-mo", 5.49f, 25 },
-                    { 5, "Relieves symptoms of allergies and hay fever.", "/images/Flu/Clarityne.jpg", "Clarityne", 7.99f, 40 },
-                    { 6, "Provides relief from acid reflux and heartburn.", "/images/Indigestion/Gaviscon.jpg", "Gaviscon", 6.49f, 20 },
-                    { 7, "Effective relief for headaches, fever, and pain.", "/images/Pain/Panadol.png", "Panadol", 4.99f, 100 }
+                    { 1, "Relieves sore throat and cough symptoms.", null, "Difflam", 8.99f, 50 },
+                    { 2, "Traditional remedy for cough and sore throat.", null, "Pei Pa Koa", 6.99f, 40 },
+                    { 3, "Helps restore gut health and control diarrhea.", null, "Lacteolfort", 4.99f, 30 },
+                    { 4, "Lubricates dry eyes and provides long-lasting relief.", null, "Moist Eye-mo", 5.49f, 25 },
+                    { 5, "Relieves symptoms of allergies and hay fever.", null, "Clarityne", 7.99f, 40 },
+                    { 6, "Provides relief from acid reflux and heartburn.", null, "Gaviscon", 6.49f, 20 },
+                    { 7, "Effective relief for headaches, fever, and pain.", null, "Panadol", 4.99f, 100 }
                 });
 
             migrationBuilder.InsertData(
