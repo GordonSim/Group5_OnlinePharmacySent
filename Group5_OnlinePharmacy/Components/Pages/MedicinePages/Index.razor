@@ -6,27 +6,43 @@
 @implements IAsyncDisposable
 @inject IDbContextFactory<Group5_OnlinePharmacy.Data.Group5_OnlinePharmacyContext> DbFactory
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Medicines</PageTitle>
 
+<h1>Medicines</h1>
 
-<h1>Index</h1>
+<AuthorizeView Roles="Administrator">
+    <p>
+        <a href="medicines/create" class="btn create-btn">Create New Medicine</a>
+    </p>
+</AuthorizeView>
 
-<p>
-    <a href="medicines/create">Create New</a>
-</p>
+<!-- Medicine Grid Container -->
+<div class="medicine-container">
+    @foreach (var medicine in context.Medicine)
+    {
+        <div class="medicine-card">
+            <!-- Medicine Image -->
+            <img src="/Images/@medicine.ImageURL" alt="@medicine.Name" class="medicine-image" />
 
-<QuickGrid Class="table" Items="context.Medicine">
-    <PropertyColumn Property="medicine => medicine.Name" />
-    <PropertyColumn Property="medicine => medicine.Price" />
-    <PropertyColumn Property="medicine => medicine.Description" />
-    <PropertyColumn Property="medicine => medicine.StockQty" />
+            <h3>@medicine.Name</h3>
+            <p class="price">$@medicine.Price</p>
+            <p class="description">@medicine.Description</p>
+            <p class="stock">Stock: @medicine.StockQty</p>
 
-    <TemplateColumn Context="medicine">
-        <a href="@($"medicines/edit?id={medicine.Id}")">Edit</a> |
-        <a href="@($"medicines/details?id={medicine.Id}")">Details</a> |
-        <a href="@($"medicines/delete?id={medicine.Id}")">Delete</a>
-    </TemplateColumn>
-</QuickGrid>
+            <!-- Add to Cart Button -->
+            <a href="#" class="add-to-cart">Add to Cart</a>
+
+            <!-- Admin Controls: Only visible to administrators -->
+            <AuthorizeView Roles="Administrator">
+                <div class="admin-controls">
+                    <a href="@($"medicines/edit?id={medicine.Id}")" class="btn edit-btn">Edit</a>
+                    <a href="@($"medicines/details?id={medicine.Id}")" class="btn details-btn">Details</a>
+                    <a href="@($"medicines/delete?id={medicine.Id}")" class="btn delete-btn">Delete</a>
+                </div>
+            </AuthorizeView>
+        </div>
+    }
+</div>
 
 @code {
     private Group5_OnlinePharmacyContext context = default!;

@@ -34,7 +34,12 @@
                 <label for="stockqty" class="form-label">StockQty:</label> 
                 <InputNumber id="stockqty" @bind-Value="Medicine.StockQty" class="form-control" /> 
                 <ValidationMessage For="() => Medicine.StockQty" class="text-danger" /> 
-            </div>       
+            </div>   
+            <div class="mb-3">
+                <label for="imageurl" class="form-label">Image:</label>
+                <InputText id="imageurl" @bind-Value="Medicine.ImageURL" class="form-control" />
+                <ValidationMessage For="() => Medicine.ImageURL" class="text-danger" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>

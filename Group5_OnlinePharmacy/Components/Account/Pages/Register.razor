@@ -129,6 +129,17 @@
         await UserManager.AddClaimAsync(user, new System.Security.Claims.Claim("userId",
         user.Id));
 
+        //create the user role if it doesn't exist
+        if (!await RoleManager.RoleExistsAsync("User"))
+        {
+            await RoleManager.CreateAsync(new IdentityRole("User"));
+        }
+        //add the user to the user role
+        await UserManager.AddToRoleAsync(user, "User");
+        //add the user id as claim when user registers
+        await UserManager.AddClaimAsync(user, new System.Security.Claims.Claim("userId",
+        user.Id));
+
         // Create Customer
         Customer Customer =
             new Customer

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Group5_OnlinePharmacy.Migrations
 {
     [DbContext(typeof(Group5_OnlinePharmacyContext))]
-    [Migration("20250212030703_RemovedImageURLFromMedicine")]
-    partial class RemovedImageURLFromMedicine
+    [Migration("20250212075213_AddedMedicineImageUrl")]
+    partial class AddedMedicineImageUrl
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,8 +109,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0c8bfd23-1eb2-4904-bb61-143f0a2d1b60",
-                            CustomerId = 1,
+                            ConcurrencyStamp = "81934920-abd5-48a4-99c5-76449cf4b4c6",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -118,9 +117,9 @@ namespace Group5_OnlinePharmacy.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGSYt16jwi/dLpzVrXB9tQ4l1ExcLXEbt2HR7hzsX5d39GouN3BNp3799JuwCP1G5g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMdhpJLiPrwazp+b7GrN/Qi43Vv2NHs11O1XQ07Dst1wIJ/wduJGw9Mq91/ywgpiJw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "02934033-fa38-44c1-a4ea-6f8ec1f0c1b9",
+                            SecurityStamp = "39c7d584-a3eb-4078-a53b-c79928112af6",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -252,6 +251,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = 1,
                             Description = "Relieves sore throat and cough symptoms.",
+                            ImageURL = "Images/Difflam.jpg",
                             Name = "Difflam",
                             Price = 8.99f,
                             StockQty = 50
@@ -260,6 +260,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = 2,
                             Description = "Traditional remedy for cough and sore throat.",
+                            ImageURL = "Images/Pei Pa Koa.jpg",
                             Name = "Pei Pa Koa",
                             Price = 6.99f,
                             StockQty = 40
@@ -268,6 +269,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = 3,
                             Description = "Helps restore gut health and control diarrhea.",
+                            ImageURL = "Images/Lacteolfort.jpg",
                             Name = "Lacteolfort",
                             Price = 4.99f,
                             StockQty = 30
@@ -276,6 +278,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = 4,
                             Description = "Lubricates dry eyes and provides long-lasting relief.",
+                            ImageURL = "Images/Moist Eye-mo.jpg",
                             Name = "Moist Eye-mo",
                             Price = 5.49f,
                             StockQty = 25
@@ -284,6 +287,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = 5,
                             Description = "Relieves symptoms of allergies and hay fever.",
+                            ImageURL = "Images/Clarityne.jpg",
                             Name = "Clarityne",
                             Price = 7.99f,
                             StockQty = 40
@@ -292,6 +296,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = 6,
                             Description = "Provides relief from acid reflux and heartburn.",
+                            ImageURL = "Images/Gaviscon.jpg",
                             Name = "Gaviscon",
                             Price = 6.49f,
                             StockQty = 20
@@ -300,6 +305,7 @@ namespace Group5_OnlinePharmacy.Migrations
                         {
                             Id = 7,
                             Description = "Effective relief for headaches, fever, and pain.",
+                            ImageURL = "Images/Panadol.jpg",
                             Name = "Panadol",
                             Price = 4.99f,
                             StockQty = 100
